@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ЧГК</string>
+    <string name="string_timetable">Расписание</string>
+    <string name="string_values">Оценки</string>
+    <string name="string_settings">Настройки</string>
+    <string name="todo">TODO</string>
+    <string name="start">Start</string>
+</resources>
