@@ -1,28 +1,20 @@
-package com.example.chgk.PanelActivity;
+package com.example.chgk;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-
-import com.example.chgk.MainActivity;
-import com.example.chgk.R;
 
 public class LogoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_logo);
+        setContentView(R.layout.logo_fragment);
         init();
         StartMainActivity();
+
     }
     private void init(){
 
-    }
-
-    public void onClickStart(View view) {
-        Intent i = new Intent (LogoActivity.this, MainActivity.class);
-        startActivity(i);
     }
 
     @Override
@@ -40,7 +32,7 @@ public class LogoActivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Intent i = new Intent (LogoActivity.this, MainActivity.class);
+                Intent i = new Intent (LogoActivity.this,LoginActivity.class);
                 startActivity(i);
             }
         }).start();

@@ -3,16 +3,19 @@
 
     <item
         android:id="@+id/navigation_timetable"
+        android:enabled="true"
         android:icon="@drawable/ic_timetable"
         android:title="@string/string_timetable" />
 
     <item
         android:id="@+id/navigation_values"
+        android:enabled="true"
         android:icon="@drawable/ic_values"
         android:title="@string/string_values" />
 
     <item
         android:id="@+id/navigation_settings"
+        android:enabled="true"
         android:icon="@drawable/ic_settings"
         android:title="@string/string_settings" />
 

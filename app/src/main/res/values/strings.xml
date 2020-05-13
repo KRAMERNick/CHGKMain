@@ -5,4 +5,13 @@
     <string name="string_settings">Настройки</string>
     <string name="todo">TODO</string>
     <string name="start">Start</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in_short">sign_in</string>
+    <string name="button_login">Войти</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="text1">Авторизация</string>
+    <string name="text2">Урок</string>
+    <string name="text3">Дз</string>
+    <string name="out_ac">Выйти из аккаунта</string>
 </resources>

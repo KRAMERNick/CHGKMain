@@ -1,13 +1,10 @@
-package com.example.chgk;
+package com.example.chgk.MVP.Data;
 
-import android.widget.EditText;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.os.AsyncTask;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.chgk.MVP.Model.Raitng;
+import com.example.chgk.MVP.Model.Schedule;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,65 +12,82 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import com.example.chgk.R;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class DataSingletone implements IData {
 
-    public static String login_in = "";
-    public static String password_in = "";
-    public static String server = "chgk.space/21";
-
-    public EditText log;
-    public EditText pas;
+    private static String login_in = "";
+    private static String password_in = "";
+    private static String server = "chgk.space/21";
+    protected String resultString;
 
 
+    private List<Raitng> raitngs = new ArrayList<>();
+    private List<Schedule> schedules = new ArrayList<>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    private static DataSingletone instance;
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    private DataSingletone(){
 
-
-        Button btn = (Button) findViewById(R.id.button);
-        log = (EditText) findViewById(R.id.editText2);
-        pas = (EditText) findViewById(R.id.editText);
-
-
-
-
-        btn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                login_in = log.getText().toString();
-                password_in = pas.getText().toString();
-
-
-                try {
-
-                    new SendData().execute();
-
-
-                } catch (Exception e) {
-
-                }
-
-
-
-
-
-            }
-        });
     }
 
+    public static DataSingletone getInstance(){
+        if(instance == null){
+            instance = new DataSingletone();
+        }
+        return instance;
+    }
 
+    private void setDataRaitng(){
+        raitngs.add(new Raitng("Английский язык", (float) 4.04));
+        raitngs.add(new Raitng("Алгебра", (float) 4.56));
+        raitngs.add(new Raitng("Русский язык", (float) 4.33));
+        raitngs.add(new Raitng("Математика", (float) 4.89));
+    }
 
+    private void setDataSchedule(){
+        schedules.add(new Schedule("Урок 1", "Что то сделать"));
+        schedules.add(new Schedule("Урок 2", "Что то сделать"));
+        schedules.add(new Schedule("Урок 3", "Что то сделать"));
+        schedules.add(new Schedule("Урок 4", "Что то сделать"));
+        schedules.add(new Schedule("Урок 5", "Что то сделать"));
+    }
 
+    @Override
+    public List<Raitng> getListRaiting() {
+        if (raitngs.isEmpty()){
+            setDataRaitng();
+            return raitngs;
+        }else {
+            return raitngs;
+        }
+    }
 
+    @Override
+    public List<Schedule> getListSchedule() {
+        if (schedules.isEmpty()){
+            setDataSchedule();
+            return schedules;
+        }else {
+            return schedules;
+        }
+    }
 
+    @Override
+    public boolean Login(String login, String password) {
+        login_in = login;
+        password_in = password;
+        try {
+            SendData sendData = new SendData();
+            sendData.execute().get();
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
+
+        return false;
+    }
 
     class SendData extends AsyncTask<Void, Void, Void> {
 
@@ -94,8 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                 byte[] data = null;
                 InputStream is = null;
 
-
-
                 try {
                     URL url = new URL(myURL);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -112,9 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                     // конвертируем передаваемую строку в UTF-8
                     data = parammetrs.getBytes("UTF-8");
 
-
                     OutputStream os = conn.getOutputStream();
-
 
                     // передаем данные на сервер
                     os.write(data);
@@ -133,21 +143,15 @@ public class LoginActivity extends AppCompatActivity {
 
                         byte[] buffer = new byte[8192]; // размер буфера
 
-
                         // Далее так читаем ответ
                         int bytesRead;
-
-
 
                         while ((bytesRead = is.read(buffer)) != -1) {
                             baos.write(buffer, 0, bytesRead);
                         }
 
-
                         data = baos.toByteArray();
                         resultString = new String(data, "UTF-8");  // сохраняем в переменную ответ сервера, у нас "OK"
-
-
 
                     } else {
                     }
@@ -171,21 +175,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-
-
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
-            Toast toast = Toast.makeText(getApplicationContext(), "Данные переданы!", Toast.LENGTH_SHORT);
-
-
         }
 
-
-
-
     }
-
-
 }
+
